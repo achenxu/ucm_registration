@@ -51,26 +51,26 @@ def verify_registration(b, section1):
     return False
 
 def email(subject, message):
-	msg = MIMEText(message)
-	msg['Subject'] = subject
-	msg['To'] = email_to
-	msg['From'] = username_email
-	server=smtplib.SMTP('smtp.office365.com', 587)
-	server.starttls()
-	server.login(username_email, password)
-	server.sendmail(msg['From'], msg['To'], msg.as_string())
-	server.quit()
+    msg = MIMEText(message)
+    msg['Subject'] = subject
+    msg['To'] = email_to
+    msg['From'] = username_email
+    server=smtplib.SMTP('smtp.office365.com', 587)
+    server.starttls()
+    server.login(username_email, password)
+    server.sendmail(msg['From'], msg['To'], msg.as_string())
+    server.quit()
 
 with Browser('chrome', headless=True) as b:
-	url = 'https://mystudentrecord.ucmerced.edu/pls/PROD/xhwschedule.P_SelectSubject'
-	b.visit(url)
-	b.find_by_name('subjcode').first.select('CSE')
-	b.find_by_name('openclasses')[1].click()
-	b.find_by_css('input[type=submit]').first.click()
-	rows = b.find_by_css('table.datadisplaytable > tbody > tr')
-	for row in rows:
-		if course_name in row.text and section2 in row.text and 'Closed' not in row.text:
-			register(b, section1, section2)
-			if verify_registration(b, section1):
-				email(email_subject, email_message)
-			sys.exit()
+    url = 'https://mystudentrecord.ucmerced.edu/pls/PROD/xhwschedule.P_SelectSubject'
+    b.visit(url)
+    b.find_by_name('subjcode').first.select('CSE')
+    b.find_by_name('openclasses')[1].click()
+    b.find_by_css('input[type=submit]').first.click()
+    rows = b.find_by_css('table.datadisplaytable > tbody > tr')
+    for row in rows:
+    	if course_name in row.text and section2 in row.text and 'Closed' not in row.text:
+    		register(b, section1, section2)
+    		if verify_registration(b, section1):
+    			email(email_subject, email_message)
+    		sys.exit()

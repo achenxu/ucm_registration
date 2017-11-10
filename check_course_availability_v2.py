@@ -18,34 +18,34 @@ email_subject = 'Registered for ' + course_name + '!'
 email_message = 'Registered for ' + course_name + '!'
 
 def register(b, section1, section2):
-    # Login
-    url = "https://my.ucmerced.edu/uPortal/f/u20l1s171/normal/render.uP"
-    b.visit(url)
-    b.fill('username', username)
-    b.fill('password', password)
-    b.find_by_name('submit').click()
-    # Navigate to registration page
-    b.find_link_by_partial_text('myRegistration').first.click()
-    b.windows.current = b.windows[1]
-    b.find_link_by_partial_text('Add').click()
-    b.find_by_css('form input[type=submit]')[1].click()
-    # Register
-    b.find_by_id('crn_id1').fill(section1)
-    b.find_by_id('crn_id2').fill(section2)
-    b.find_by_css('form input[type=submit][value="Submit Changes"]').click()
+	# Login
+	url = "https://my.ucmerced.edu/uPortal/f/u20l1s171/normal/render.uP"
+	b.visit(url)
+	b.fill('username', username)
+	b.fill('password', password)
+	b.find_by_name('submit').click()
+	# Navigate to registration page
+	b.find_link_by_partial_text('myRegistration').first.click()
+	b.windows.current = b.windows[1]
+	b.find_link_by_partial_text('Add').click()
+	b.find_by_css('form input[type=submit]')[1].click()
+	# Register
+	b.find_by_id('crn_id1').fill(section1)
+	b.find_by_id('crn_id2').fill(section2)
+	b.find_by_css('form input[type=submit][value="Submit Changes"]').click()
 
 def verify_registration(b, section1):
-    b.windows[1].close()
-    b.windows.current = b.windows[0]
-    b.find_link_by_partial_text('myRegistration').first.click()
-    b.windows.current = b.windows[1]
-    b.find_link_by_partial_text('Concise Student Schedule').click()
-    b.find_by_css('form input[type=submit]')[1].click()
-    elems = b.find_by_css('table.datadisplaytable tr td:first-of-type')
-    for e in elems:
-        if section1 in e.text:
-            return True
-    return False
+	b.windows[1].close()
+	b.windows.current = b.windows[0]
+	b.find_link_by_partial_text('myRegistration').first.click()
+	b.windows.current = b.windows[1]
+	b.find_link_by_partial_text('Concise Student Schedule').click()
+	b.find_by_css('form input[type=submit]')[1].click()
+	elems = b.find_by_css('table.datadisplaytable tr td:first-of-type')
+	for e in elems:
+	    if section1 in e.text:
+	        return True
+	return False
 
 def email(subject, message):
 	msg = MIMEText(message)
