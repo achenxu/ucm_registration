@@ -69,4 +69,4 @@ def register_for_sections(s, term, section_list):
 	
 if courses_available(PROGRAM_CODE, TERM_CODE, OPEN_CLASSES ,NEEDED_SECTIONS):
 	session = login_to_portal(USERNAME, PASSWORD)
-	register_for_sections(session, TERM_CODE, ['14999', '15000'])
+	register_for_sections(session, TERM_CODE, NEEDED_SECTIONS)
