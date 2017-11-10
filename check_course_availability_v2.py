@@ -66,7 +66,7 @@ with Browser('chrome', headless=True) as b:
 	b.find_by_css('input[type=submit]').first.click()
 	rows = b.find_by_css('table.datadisplaytable > tbody > tr')
 	for row in rows:
-		if 'Computer Architecture' in row.text and section2 in row.text and 'Closed' not in row.text:
+		if course_name in row.text and section2 in row.text and 'Closed' not in row.text:
 			register(b, section1, section2)
 			if verify_registration(b, section1):
 				email(email_subject, email_message)
