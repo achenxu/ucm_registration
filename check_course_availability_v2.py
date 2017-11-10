@@ -4,6 +4,7 @@ import smtplib, time, sys
 
 username = '<username>'
 password = '<password>'
+linux_user = '<linux_user>'
 
 course_name = '<course_name>'
 section1 = '<section_of_course_to_register_for>'
@@ -69,5 +70,5 @@ with Browser('chrome', headless=True) as b:
 			register(b, section1, section2)
 			if verify_registration(b, section1):
 				email(email_subject, email_message)
-				os.system('crontab -u chris -l | grep -v "check_course_availability" | crontab -u chris -')
+				os.system('crontab -u ' + linux_user  + ' -l | grep -v "check_course_availability" | crontab -u ' + linux_user + ' -')
 			sys.exit()

@@ -73,5 +73,4 @@ with Browser('chrome', headless=True) as b:
 			register(b, section1, section2)
 			if verify_registration(b, section1):
 				email(email_subject, email_message)
-				os.system('crontab -u chris -l | grep -v "check_course_availability" | crontab -u chris -')
 			sys.exit()
