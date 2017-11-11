@@ -1,6 +1,6 @@
 from splinter import Browser
 from email.mime.text import MIMEText
-import smtplib, time, sys
+import smtplib, time, sys, os
 
 username = '<username>'
 password = '<password>'
