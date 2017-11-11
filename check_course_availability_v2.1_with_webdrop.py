@@ -2,10 +2,10 @@ from splinter import Browser
 from email.mime.text import MIMEText
 import smtplib, time, sys, os
 
-username = '<UCM_Username>'
-password = '<UCM_Password>'
-linux_user = '<OS_Username>'
-email_to = '<Recipient_Email>'
+username = 'UCM_Username'
+password = 'UCM_Password'
+linux_user = 'OS_Username'
+email_to = 'Recipient_Email'
 
 # Find subj_category using browser "Inspect Element"
 subj_category = 'CSE_MATH_BIO_etc'
