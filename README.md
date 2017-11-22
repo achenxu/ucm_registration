@@ -4,6 +4,7 @@ Check a if a UC Merced course is available and register for it
 
 # How to install V2 or V2.1 on Raspberry Pi 
 (Tested on RPI3 running Raspbian Stretch Lite W/ PIXEL Desktop Environment)
+
 install python and python-pip
   sudo apt-get install python python-pip
 
