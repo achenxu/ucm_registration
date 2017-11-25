@@ -86,7 +86,7 @@ def email(subject, message):
 	server.sendmail(msg['From'], msg['To'], msg.as_string())
 	server.quit()
 
-with Browser('chrome', headless=False) as b:
+with Browser('chrome', headless=True) as b:
 	url = 'https://mystudentrecord.ucmerced.edu/pls/PROD/xhwschedule.P_SelectSubject'
 	b.visit(url)
 	b.find_by_name('subjcode').first.select(subj_category)
