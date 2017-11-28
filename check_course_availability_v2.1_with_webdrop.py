@@ -8,16 +8,16 @@ linux_user = 'OS_Username'
 email_to = 'Recipient_Email'
 
 # Find subj_category using browser "Inspect Element"
-subj_category = 'CSE_MATH_BIO_etc'
-course_name = 'Course_Name'
-section1 = 'XXXXX'
-section2 = 'Optional'
+subj_category = 'MATH'
+course_name = 'Numerical Methods Sci & Engr'
+section1 = '10590'
+section2 = '14076'
 
 # (Optional) To Drop Sections, Change drop to 'True'. Use at your own risk.
 drop = False
-course_name_drop = 'Course_Name'
-section1_drop = 'XXXXX'
-section2_drop = 'Optional'
+course_name_drop = 'the night lab'
+section1_drop = '10590'
+section2_drop = '10754'
 
 # ---------------------End of user inputs---------------------
 
@@ -85,18 +85,29 @@ def email(subject, message):
 	server.login(username_email, password)
 	server.sendmail(msg['From'], msg['To'], msg.as_string())
 	server.quit()
-
-with Browser('chrome', headless=True) as b:
+#driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
+with Browser('chrome', headless=False) as b:
 	url = 'https://mystudentrecord.ucmerced.edu/pls/PROD/xhwschedule.P_SelectSubject'
 	b.visit(url)
 	b.find_by_name('subjcode').first.select(subj_category)
-	b.find_by_name('openclasses')[1].click()
+	b.find_by_name('openclasses').first.click()
 	b.find_by_css('input[type=submit]').first.click()
 	rows = b.find_by_css('table.datadisplaytable > tbody > tr')
+	# first check if section2 (discussion/lab) is available.
+	sec2found = True # this is default, in case there is no section 2 to add.
+	if drop == True:
+		sec2found == False
 	for row in rows:
 		if course_name in row.text and section2 in row.text and 'Closed' not in row.text:
-			register(b, section1, section2, drop, course_name_drop, section1_drop, section2_drop)
-			if verify_registration(b, section1):
-				email(email_subject, email_message)
-				os.system('crontab -u ' + linux_user  + ' -l | grep -v "check_course_availability" | crontab -u ' + linux_user + ' -')
-			sys.exit()
+			sec2found = True
+			break
+	#if section2 was found available, check if section1 is available, and if so, register.
+	if sec2found == True:
+		for row in rows:
+			if course_name in row.text and section1 in row.text and 'Closed' not in row.text:
+				register(b, section1, section2, drop, course_name_drop, section1_drop, section2_drop)
+				if verify_registration(b, section1):
+					email(email_subject, email_message)
+					os.system('crontab -u ' + linux_user  + ' -l | grep -v "ucmregister" | crontab -u ' + linux_user + ' -')
+				sys.exit()
+	sys.exit()
